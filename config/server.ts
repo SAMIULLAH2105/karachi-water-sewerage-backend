@@ -1,22 +1,23 @@
 export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://karachi-water-sewerage-backend-production.up.railway.app'),
   app: {
     keys: env.array('APP_KEYS'),
   },
   admin: {
     auth: {
-      secret: env('ADMIN_JWT_SECRET', 'default_jwt_secret'),
+      secret: env('ADMIN_JWT_SECRET', 'someRandomSecret'),
     },
-    // 👇 Disable secure cookies and force non-https mode for Railway
-    url: '/admin',
-    serveAdminPanel: true,
+    // ✅ force non-secure cookies in production
     cookies: {
       secure: false,
     },
   },
-  url: env('PUBLIC_URL', 'http://0.0.0.0:1337'),
+  // ✅ also force Strapi to trust proxy (important for Railway)
+  proxy: true,
 });
+
 
 
 // export default ({ env }) => ({
